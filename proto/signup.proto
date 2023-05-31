@@ -1,0 +1,34 @@
+syntax = "proto3";
+package proto;
+
+import "user.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/nguyendt456/signup-with-verification";
+
+message SignupReponse {
+    string state = 1;
+    User user = 2;
+}
+
+message VerifyRequest {
+    string verification_code = 1;
+}
+
+message VerifyResponse {
+    bool is_verified = 1;
+}
+
+service SignupService {
+    rpc Signup(User) returns (SignupReponse) {
+        option (google.api.http) = {
+            post: "/v1/signup"
+            body: "*"
+        };
+    }
+    rpc Verify(VerifyRequest) returns (VerifyResponse) {
+        option (google.api.http) = {
+            get: "/v1/verify"
+        };
+    }
+}

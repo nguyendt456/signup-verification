@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: redis
+    image: bitnami/redis:latest
+    user: "root:1000"
+    restart: always
+    environment:
+      - REDIS_PASSWORD=topsecret
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_volume:/redis_volume
+
+  pg:
+    container_name: postgresql
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=signup
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  signup_service:
+    container_name: signup_service
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    restart: always
+    depends_on:
+      - pg
+      - redis
+
+volumes:
+  redis_volume:
+    driver: local
+  db:
+    driver: local

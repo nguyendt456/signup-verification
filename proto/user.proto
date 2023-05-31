@@ -1,0 +1,10 @@
+syntax = "proto3";
+package proto;
+option go_package = "github.com/nguyendt456/signup-with-verification";
+
+message User {
+    string email = 1;
+    string password = 2;
+    string name = 3;
+    bool is_verified = 4;
+}
