@@ -1,5 +1,7 @@
 # Sign-up gRPC service with verification
 
+**Description:** Sign-up user and verify by email.
+
 ## Build and run
 
 Update `.env` file:
